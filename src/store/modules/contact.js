@@ -57,7 +57,7 @@ const actions = {
   changeType({commit}, id) {
     commit('setType', id)
   },
-  toggleInput({commit, state}) {
+  setInput({commit, state}) {
     const empty = state.info.filter(item => !item.value)
     if (empty.length === 0) {
       commit('addInfo')

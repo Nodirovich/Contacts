@@ -1,5 +1,5 @@
 <template>
-  <div class="edit__block">
+  <div class="edit__block" :class="toggleClass">
     <select name="type" v-model="info.type" @change="changeHandler">
       <option
         v-for="type in info.types"
@@ -15,7 +15,6 @@
       :placeholder="'Введите свой ' + info.type.text"
       v-model="info.value"
       @input="changeValue"
-      @blur="changeValue"
     >
   </div>
 </template>
@@ -24,13 +23,43 @@
 
 export default {
   props: ['info', 'id'],
+  data() {
+    return {
+      errors: false,
+    }
+  },
+  computed: {
+    toggleClass() {
+      if (this.info.value == '' && this.id !== 0) {
+        return ''
+      }
+      return this.errors ? 'error' : ''
+    }
+  },
   methods: {
     changeHandler() {
       this.$store.dispatch('contact/changeType', this.id)
-      this.$store.dispatch('contact/toggleInput')
+      this.$store.dispatch('contact/setInput')
     },
     changeValue() {
-      this.$store.dispatch('contact/toggleInput')
+      this.errors = false
+      if (this.info.type.val === 'tel') {
+        this.info.value = this.info.value.replace(/[A-Za-z!@#$%^&*()]/g, '')
+      }
+      this.$store.dispatch('contact/setInput')
+      this.valid()
+    },
+    valid() {
+      const type = this.info.type.val
+      const value = this.info.value
+      if (type === 'email') {
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        this.errors = !re.test(String(value).toLowerCase());
+      }
+
+      if (value.length < 5) {
+        this.errors = true
+      }
     }
   }
 }
@@ -41,6 +70,9 @@ export default {
     &__block {
       display: flex;
       margin-bottom: 10px;
+      &.error {
+        border-radius: 10px;
+      }
       select {
         flex-basis: 20%;
         min-width: 100px;

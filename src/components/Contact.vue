@@ -25,6 +25,9 @@ export default {
     color: #333333;
     padding: 5px 0;
     border-bottom: 1px solid #eeeeee;
+    &:hover {
+      background: #f5f5f5;
+    }
     &__icon {
       line-height: 1;
       margin-right: 15px;

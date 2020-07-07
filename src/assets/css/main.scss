@@ -2,6 +2,9 @@
   max-width: 800px;
   margin: 0 auto;
   position: relative;
+  min-height: 100vh;
+  border-right: 1px solid #eaeaea;
+  border-left: 1px solid #eaeaea;
 }
 
 a, a:hover {
@@ -65,4 +68,8 @@ input, select {
 
 .error {
   border: 1px solid red;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
 }

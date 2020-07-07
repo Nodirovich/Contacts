@@ -56,9 +56,6 @@ export default {
   }),
   methods: {
     async create() {
-      if (this.name.length < 4) {
-        return false
-      }
       const newUser = {name: this.name, info: this.informations}
       await this.$store.dispatch('contact/createUser', newUser)
       this.$router.push('/')
@@ -66,6 +63,9 @@ export default {
   },
   mounted() {
     this.$store.commit('contact/addInfo')
+  },
+  beforeDestroy() {
+    this.$store.commit('contact/removeUser')
   }
 }
 </script>
