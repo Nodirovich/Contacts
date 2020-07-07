@@ -46,7 +46,7 @@ import { mapState } from 'vuex'
 
 export default {
   components: { Input },
-  data() {
+  data () {
     return {
       name: ''
     }
@@ -55,16 +55,16 @@ export default {
     informations: state => state.contact.info
   }),
   methods: {
-    async create() {
-      const newUser = {name: this.name, info: this.informations}
+    async create () {
+      const newUser = { name: this.name, info: this.informations }
       await this.$store.dispatch('contact/createUser', newUser)
       this.$router.push('/')
     }
   },
-  mounted() {
+  mounted () {
     this.$store.commit('contact/addInfo')
   },
-  beforeDestroy() {
+  beforeDestroy () {
     this.$store.commit('contact/removeUser')
   }
 }

@@ -14,19 +14,19 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       name: ''
     }
   },
   computed: {
-    length() {
+    length () {
       const length = this.$store.getters['list/contactsLength'] || 0
       return length + ' контакта'
     }
   },
   watch: {
-    name(newVal, val) {
+    name (newVal, val) {
       this.$store.commit('list/setSearch', newVal)
     }
   }

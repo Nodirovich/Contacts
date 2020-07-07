@@ -23,25 +23,25 @@
 
 export default {
   props: ['info', 'id'],
-  data() {
+  data () {
     return {
-      errors: false,
+      errors: false
     }
   },
   computed: {
-    toggleClass() {
-      if (this.info.value == '' && this.id !== 0) {
+    toggleClass () {
+      if (this.info.value === '' && this.id !== 0) {
         return ''
       }
       return this.errors ? 'error' : ''
     }
   },
   methods: {
-    changeHandler() {
+    changeHandler () {
       this.$store.dispatch('contact/changeType', this.id)
       this.$store.dispatch('contact/setInput')
     },
-    changeValue() {
+    changeValue () {
       this.errors = false
       if (this.info.type.val === 'tel') {
         this.info.value = this.info.value.replace(/[A-Za-z!@#$%^&*()]/g, '')
@@ -49,12 +49,13 @@ export default {
       this.$store.dispatch('contact/setInput')
       this.valid()
     },
-    valid() {
+    valid () {
       const type = this.info.type.val
       const value = this.info.value
       if (type === 'email') {
-        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        this.errors = !re.test(String(value).toLowerCase());
+        // eslint-disable-next-line no-useless-escape
+        const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+        this.errors = !re.test(String(value).toLowerCase())
       }
 
       if (value.length < 5) {

@@ -72,26 +72,26 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   computed: {
     ...mapState({
       user: state => state.contact.user
     }),
-    edit() {
+    edit () {
       return '/edit/' + this.$route.params.id
     }
   },
   methods: {
-    getUser() {
+    getUser () {
       this.$store.dispatch('contact/getUser', this.$route.params.id)
     }
   },
-  mounted() {
+  mounted () {
     this.getUser()
   },
-  beforeDestroy() {
+  beforeDestroy () {
     this.$store.commit('contact/removeUser')
   }
 }

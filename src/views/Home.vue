@@ -28,8 +28,8 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import Search from "@/components/Search"
-import Contact from "@/components/Contact"
+import Search from '@/components/Search'
+import Contact from '@/components/Contact'
 
 export default {
   components: { Search, Contact },
@@ -43,12 +43,12 @@ export default {
     ...mapActions({
       getContact: 'list/getContacts'
     }),
-    search(name) {
-      let text = this.textSearch.trim().toLocaleLowerCase()
+    search (name) {
+      const text = this.textSearch.trim().toLocaleLowerCase()
       return name.toLocaleLowerCase().includes(text)
     }
   },
-  mounted() {
+  mounted () {
     this.getContact()
   }
 }

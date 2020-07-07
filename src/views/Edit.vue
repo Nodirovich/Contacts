@@ -58,10 +58,10 @@ export default {
     })
   },
   methods: {
-    editUser() {
+    editUser () {
       this.$store.dispatch('contact/getEditUser', this.$route.params.id)
     },
-    async editHandler() {
+    async editHandler () {
       const editUser = {
         name: this.user.name,
         info: this.informations,
@@ -72,10 +72,10 @@ export default {
       this.$router.push(`/contact/${this.$route.params.id}`)
     }
   },
-  mounted() {
+  mounted () {
     this.editUser()
   },
-  beforeDestroy() {
+  beforeDestroy () {
     this.$store.commit('contact/removeUser')
   }
 }
