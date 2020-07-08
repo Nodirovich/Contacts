@@ -10,6 +10,7 @@
     <button
       class="btn__right btn btn-success"
       @click="create"
+      :disabled="!valid"
     >
       <span class="material-icons">
         done
@@ -51,9 +52,14 @@ export default {
       name: ''
     }
   },
-  computed: mapState({
-    informations: state => state.contact.info
-  }),
+  computed: {
+    ...mapState({
+      informations: state => state.contact.info
+    }),
+    valid () {
+      return this.name.length > 3
+    }
+  },
   methods: {
     async create () {
       const newUser = { name: this.name, info: this.informations }
