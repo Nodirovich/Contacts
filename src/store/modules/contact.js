@@ -50,9 +50,13 @@ const actions = {
     await axios.post(`${URL}.json`, user)
   },
   async getUser ({ commit }, id) {
-    const data = await axios.get(`${URL}/${id}.json`)
-    const user = await data.data
-    commit('setUser', user)
+    try {
+      const data = await axios.get(`${URL}/${id}.json`)
+      const user = await data.data
+      commit('setUser', user)
+    } catch (error) {
+      throw new Error(error)
+    }
   },
   changeType ({ commit }, id) {
     commit('setType', id)
@@ -67,15 +71,30 @@ const actions = {
     }
   },
   async getEditUser ({ commit }, id) {
-    const res = await axios.get(`${URL}/${id}.json`)
-    const user = await res.data
-    commit('setUser', user)
-    commit('addInfo', structurInfo(user))
-    commit('addInfo')
+    try {
+      const res = await axios.get(`${URL}/${id}.json`)
+      const user = await res.data
+      commit('setUser', user)
+      commit('addInfo', structurInfo(user))
+      commit('addInfo')
+    } catch (error) {
+      throw new Error(error)
+    }
   },
   async editUser ({ commit }, editUser) {
     const user = structurData(editUser)
-    await axios.put(`${URL}/${editUser.uid}.json`, user)
+    try {
+      await axios.put(`${URL}/${editUser.uid}.json`, user)
+    } catch (error) {
+      throw new Error(error)
+    }
+  },
+  async rmUser ({ commit }, user) {
+    try {
+      await axios.delete(`${URL}/${user}.json`)
+    } catch (error) {
+      throw new Error(error)
+    }
   }
 }
 

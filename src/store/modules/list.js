@@ -24,13 +24,17 @@ const mutations = {
 
 const actions = {
   async getContacts ({ commit }) {
-    const res = await axios.get(`${URL}.json`)
-    const data = await res.data
-    const contacts = Object.keys(data).map(key => ({
-      ...data[key],
-      id: key
-    }))
-    commit('setContacts', contacts)
+    try {
+      const res = await axios.get(`${URL}.json`)
+      const data = await res.data
+      const contacts = Object.keys(data).map(key => ({
+        ...data[key],
+        id: key
+      }))
+      commit('setContacts', contacts)
+    } catch (error) {
+      throw new Error(error)
+    }
   }
 }
 

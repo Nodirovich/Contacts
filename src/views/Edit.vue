@@ -20,22 +20,32 @@
         </span>
       </div>
 
-       <input
-          type="text"
-          name="name"
-          v-model="user.name"
-          class="input"
-          placeholder="Полное Имя"
-        >
+      <input
+        type="text"
+        name="name"
+        v-model="user.name"
+        class="input"
+        placeholder="Полное Имя"
+      >
 
-        <div v-for="(info, index) in informations" :key="index">
-          <Input :info="info" :id="index" />
-        </div>
+      <div v-for="(info, index) in informations" :key="index">
+        <Input :info="info" :id="index" />
+      </div>
 
-        <button
-          class="btn__right btn btn-success"
-          @click="editHandler"
-        >
+      <button
+        class="btn__delete btn btn-danger"
+        @click="deleteHandler"
+      >
+        <span class="material-icons">
+          delete
+        </span>
+      </button>
+
+      <button
+        class="btn__right btn btn-success"
+        @click="editHandler"
+        :disabled="invalid"
+      >
         <span class="material-icons">
           done
         </span>
@@ -55,7 +65,10 @@ export default {
     ...mapState({
       user: state => state.contact.user,
       informations: state => state.contact.info
-    })
+    }),
+    invalid () {
+      return this.user.name.length < 3
+    }
   },
   methods: {
     editUser () {
@@ -70,6 +83,10 @@ export default {
       }
       await this.$store.dispatch('contact/editUser', editUser)
       this.$router.push(`/contact/${this.$route.params.id}`)
+    },
+    async deleteHandler () {
+      await this.$store.dispatch('contact/rmUser', this.$route.params.id)
+      this.$router.push('/')
     }
   },
   mounted () {
@@ -82,5 +99,10 @@ export default {
 </script>
 
 <style>
-
+  .btn__delete {
+    position: absolute;
+    top: 10px;
+    right: 70px;
+    height: 38px;
+  }
 </style>
