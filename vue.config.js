@@ -1,5 +1,5 @@
 /* eslint-disable semi */
 /* eslint-disable quotes */
 module.exports = {
-  publicPath: process.env.NODE_ENV === "production" ? "/contact-list" : "/"
+  publicPath: process.env.NODE_ENV === "production" ? "/Contacts" : "/"
 };
